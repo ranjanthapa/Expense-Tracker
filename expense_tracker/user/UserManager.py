@@ -6,12 +6,12 @@ class UserManager:
     def __init__(self, mysql: MySQL):
         self.mysql = mysql
 
-    def login(self, email: str, password: str) -> tuple:
+    def login(self, email: str, password: str) -> list[tuple]:
         with MySQLCursorContextManager(self.mysql) as cursor:
             select_query = "SELECT email, password FROM users WHERE email = %s AND password = %s"
             cursor.execute(select_query, (email, password))
             result = cursor.fetchone()
-            yield result
+            return result
 
     def register_user(self, email: str, password: str, phone_number: str) -> None:
         with MySQLCursorContextManager(self.mysql) as cursor:
