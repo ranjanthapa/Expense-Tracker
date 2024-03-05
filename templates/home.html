@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block content %}
+    {% with page_name="Dashboard" %}
+        {% include 'include/top-nav.html' %}
+    {% endwith %}
+
+
+    <div class="sht-transaction-details">
+
+        <div class=" transaction-detail">
+            <i class="fa-solid fa-wallet sign" style="color: #22ae0f;"></i>
+
+            <div>
+                <span style="font-weight: bold">Wallet</span>
+                <p class="amount">Rs 35000</p>
+            </div>
+        </div>
+
+
+        <div class="transaction-detail">
+            <i class="fa-solid fa-circle-arrow-down sign" style="color: #63E6BE;"></i>
+            <div>
+                <span style="font-weight: bold">To Receive</span>
+                <p class="amount">Rs 35000</p>
+            </div>
+        </div>
+
+        <div class=" transaction-detail">
+            <i class="fa-solid fa-circle-arrow-down fa-rotate-180 sign" style="color: #f56161;"></i>
+            <div>
+                <span style="font-weight: bold">To Pay</span>
+                <p class="amount">Rs 35000</p>
+            </div>
+        </div>
+
+        <div class=" transaction-detail">
+            <i class="fa-solid fa-hand-holding-dollar sign" style="color: #74C0FC;"></i>
+            <div>
+                <span style="font-weight: bold">Total Receive</span>
+                <p class="amount">Rs 35000</p>
+            </div>
+        </div>
+
+        <div class=" transaction-detail">
+            <i class="fa-solid fa-hand-holding-hand sign" style="color: #B197FC;"></i>
+
+            <div>
+                <span style="font-weight: bold">Expenses</span>
+                <p class="amount">Rs 35000</p>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

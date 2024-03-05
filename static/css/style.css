@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+* {
+    font-family: Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f5f9 !important;
+}
+
+.content {
+    margin-left: 200px;
+}
+
+.sub-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+    align-items: center;
+}
+
+.sub-head h2 {
+    font-size: 40px;
+}
+
+.btn-transaction {
+    text-decoration: none;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-size: 25px;
+    color: #bdb8d7;
+}
+
+.btn-transaction i {
+    font-family: sans-serif;
+}
+
+.income-btn {
+    background-color: #5F5EAA;
+}
+
+.expense-btn {
+    background-color: #5f5eaa;
+}
+
+.btn-transaction:hover {
+    color: #f3f5f9;
+}
+
+
+.sht-transaction-details {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+.transaction-detail {
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.sign {
+    font-size: 50px;
+    margin-right: 8px;
+}
+
+
+.income-form, .transaction-form {
+    position: absolute;
+    width: 1200px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 40px 40px 40px;
+    top: 400px;
+    left: 700px;
+    height: 500px;
+    border: 1px solid black;
+    visibility: hidden;
+}
+
+.close-form{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.form-row {
+    display: flex;
+}
+
+.column input {
+    padding: 20px;
+    font-size: 20px;
+}
+
+
+.column {
+    min-width: 400px;
+    width: 100%;
+    margin: 10px;
+}
+
+.column input:last-child {
+    width: 100%;
+}
+
+.column input[type='submit']{
+    background-color: #594f8d;
+    color: white;
+    font-size: 20px;
+}
