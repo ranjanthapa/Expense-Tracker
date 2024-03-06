@@ -8,69 +8,9 @@
     </div>
 
     <!-- Income Form -->
-     <div class="income-form transaction-form" id="incomeForm">
 
-        <div class="close-form" onclick="closeForm('income-btn')">
-            <i class="fa-thin fa-x close-sign"></i>
-        </div>
-
-        <form action="">
-
-            <div class="form-row">
-                <div class="column">
-                    <input type="text" placeholder="Enter amount of income">
-                </div>
-                <div class="column">
-                    <input type="text" placeholder="Enter source of income">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="column">
-                    <input type="text" placeholder="Remark" class="remark-field">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="column">
-                    <input type="submit" value="Add to Income">
-                </div>
-            </div>
-        </form>
-    </div>
-
+    {% include 'include/income-form.html' %}
 
     <!-- Expense Form -->
 
-
-    <div class="transaction-form" id="expenseForm">
-
-        <div class="close-form" onclick="closeForm('expense-btn')">
-            <i class="fa-thin fa-x close-sign"></i>
-        </div>
-
-        <form action="">
-
-            <div class="form-row">
-                <div class="column">
-                    <input type="text" placeholder="Enter amount of expense">
-                </div>
-                <div class="column">
-                    <input type="text" placeholder="Amount paid to ">
-                </div>
-            </div>
-
-
-            <div class="form-row">
-                <div class="column">
-                    <input type="text" placeholder="Remark" class="remark-field">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="column">
-                    <input type="submit" value="Add to Expense">
-                </div>
-            </div>
-        </form>
-    </div>
+    {% include 'include/expense-form.html' %}

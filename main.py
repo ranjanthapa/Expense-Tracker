@@ -17,5 +17,25 @@ def income():
     return render_template('income.html')
 
 
+@app.route('/transaction')
+def transaction():
+    return render_template("transaction.html")
+
+
+@app.route('/edit-profile')
+def edit_profile():
+    return render_template("edit_profile.html")
+
+
+@app.route('/register')
+def register():
+    return render_template("registration.html")
+
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -12,10 +12,11 @@
         <ul>
             <li><a href="{{ url_for('home') }}"><i class=" fas fa-solid fa-chart-line"></i> Dashboard</a></li>
             <li><a href="{{ url_for("income") }}"><i class="fas fa-solid fa-money-bill"></i> Income</a></li>
-            <li><a href="#"><i class="fas fa-solid fa-hand-holding-hand"></i> Transaction</a></li>
-            <li><a href="#"><i class="fas fa-solid fa-user"></i> Edit profile</a></li>
-            <li><a href="#"><i class="fas fa-solid fa-address-card"></i> Register</a></li>
-            <li><a href="#"><i class="fas fa-solid fa-right-from-bracket"></i> Login</a></li>
+            <li><a href="{{ url_for('transaction') }}"><i class="fas fa-solid fa-hand-holding-hand"></i> Transaction</a>
+            </li>
+            <li><a href="{{ url_for('edit_profile') }}"><i class="fas fa-solid fa-user"></i> Edit profile</a></li>
+            <li><a href="{{ url_for("register") }}"><i class="fas fa-solid fa-address-card"></i> Register</a></li>
+            <li><a href="{{ url_for("login") }}"><i class="fas fa-solid fa-right-from-bracket"></i> Login</a></li>
             <li><a href="#"><i class="fas fa-solid fa-right-from-bracket"></i> Logout</a></li>
         </ul>
     </div>

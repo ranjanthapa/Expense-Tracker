@@ -14,6 +14,7 @@ body {
 
 .content {
     margin-left: 200px;
+    /*height: 100%;*/
 }
 
 .sub-head {
@@ -89,9 +90,10 @@ body {
     height: 500px;
     border: 1px solid black;
     visibility: hidden;
+    z-index: 1;
 }
 
-.close-form{
+.close-form {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -106,9 +108,11 @@ body {
     display: flex;
 }
 
-.column input {
+.column input,  input[type='file'] {
     padding: 20px;
     font-size: 20px;
+    border: 1px solid #ccc;
+
 }
 
 
@@ -122,8 +126,66 @@ body {
     width: 100%;
 }
 
-.column input[type='submit']{
+.column input[type='submit'] {
     background-color: #594f8d;
     color: white;
     font-size: 20px;
+}
+
+.income-table {
+
+    margin-top: 20px;
+    background-color: white;
+    opacity: 0.8;
+}
+
+.income-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.income-table th,
+.income-table td {
+    border-top: 1px solid #ddd;
+    padding: 18px;
+    text-align: left;
+}
+
+.income-table th {
+    background-color: #f2f2f2;
+}
+
+.income-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.income-table tr:hover {
+    background-color: #ddd;
+}
+
+.income-info {
+    padding-left: 50px;
+}
+
+
+.registration-form, .update-profile-form , .login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+ .head{
+    margin-bottom: 20px;
+}
+
+input[type='file']::file-selector-button{
+    border: none;
+
+}
+
+.login-form .column {
+    min-width: 600px;
+    width: 100%;
+    margin: 10px;
 }

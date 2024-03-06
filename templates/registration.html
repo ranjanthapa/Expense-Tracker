@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="registration-form">
+    <div class="head">
+        <h2>Registration</h2>
+    </div>
+
+    <form action="">
+        <div class="form-row">
+            <div class="column">
+                <input type="email" placeholder="Enter your email">
+            </div>
+            <div class="column">
+                <input type="text" placeholder="Enter your phone number">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="column">
+                <input type="email" placeholder="Enter the password">
+            </div>
+            <div class="column">
+                <input type="text" placeholder="Confirm the password">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="column">
+                <label for="">Choose profile picture</label>
+                <input type="file" id="getImage" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="column">
+                <input type="submit" value="Register">
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+{% endblock content %}
