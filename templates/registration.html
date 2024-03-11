@@ -2,33 +2,42 @@
 
 {% block content %}
 
+    {% include 'include/message.html' %}
+
 <div class="registration-form">
     <div class="head">
         <h2>Registration</h2>
     </div>
 
-    <form action="">
+    <form action="{{ url_for('register') }}" method="post" enctype=multipart/form-data >
         <div class="form-row">
             <div class="column">
-                <input type="email" placeholder="Enter your email">
+                <input type="email" placeholder="Enter your email" name="email">
             </div>
             <div class="column">
-                <input type="text" placeholder="Enter your phone number">
+                <input type="text" placeholder="Enter your phone number" name="phone">
             </div>
         </div>
+
         <div class="form-row">
             <div class="column">
-                <input type="email" placeholder="Enter the password">
+                <input type="text" placeholder="Enter your full name" name="full_name">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="column">
+                <input type="password" placeholder="Enter the password" name="password">
             </div>
             <div class="column">
-                <input type="text" placeholder="Confirm the password">
+                <input type="password" placeholder="Confirm the password" name="confirm_password">
             </div>
         </div>
 
         <div class="form-row">
             <div class="column">
                 <label for="">Choose profile picture</label>
-                <input type="file" id="getImage" />
+                <input type="file" id="getImage" name="profile_picture">
             </div>
         </div>
 
@@ -40,6 +49,5 @@
     </form>
 
 </div>
-
 
 {% endblock content %}

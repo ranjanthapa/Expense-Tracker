@@ -18,3 +18,13 @@ function closeForm(formName) {
     }
 
 }
+
+
+// Hide the flash messages container after 4 seconds
+setTimeout(function () {
+    var container = document.querySelector('.flash-messages');
+    if (container) {
+        container.style.display = 'none';
+    }
+}, 4000);
+

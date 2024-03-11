@@ -15,3 +15,4 @@ class DatabaseConfig:
 def initialize_sql(app):
     mysql = MySQL(app)
     return mysql
+

@@ -2,41 +2,46 @@
 
 {% block content %}
 
-<div class="update-profile-form">
-    <div class="head">
-        <h2>Update profile</h2>
+    {% include 'include/message.html' %}
+
+    <div class="update-profile-form">
+        <div class="head">
+            <h2>Update profile</h2>
+        </div>
+
+        <form action="{{ url_for('edit_profile') }}" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="column">
+                    <input type="email" placeholder="Update your email" name="email">
+                </div>
+                <div class="column">
+                    <input type="text" placeholder="Update your phone number" name="phone_number">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="column">
+                    <input type="text" placeholder="Update your password" name="password">
+                </div>
+                <div class="column">
+                    <input type="text" placeholder="Update your full name" name="full_name">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="column">
+                    <label for="">Update your profile picture</label>
+                    <input type="file" id="getImage" name="profile_picture"/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="column">
+                    <input type="submit" value="Update">
+                </div>
+            </div>
+        </form>
+
     </div>
-
-    <form action="">
-        <div class="form-row">
-            <div class="column">
-                <input type="email" placeholder="Update your email">
-            </div>
-            <div class="column">
-                <input type="text" placeholder="Update your phone number">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="column">
-                <input type="email" placeholder="Update your password">
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="column">
-                <label for="">Update your profile picture</label>
-                <input type="file" id="getImage" />
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="column">
-                <input type="submit" value="Update">
-            </div>
-        </div>
-    </form>
-
-</div>
 
 
 {% endblock content %}

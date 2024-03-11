@@ -189,3 +189,12 @@ input[type='file']::file-selector-button{
     width: 100%;
     margin: 10px;
 }
+
+
+.flash-message{
+    background-color: #bdb8d7;
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    padding: 10px;
+}
