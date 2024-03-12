@@ -11,57 +11,27 @@
     {% endwith %}
 
     <div class="income-info">
-        <h5>Total Transaction: Nrs 200,000</h5>
+        <h5>Total Money Outflow: Nrs {{ total_expense }}</h5>
     </div>
 
     <div class="income-table">
         <table>
             <tr>
-                <th>Date</th>
+                <th>Entry Date</th>
+                <th>Paid Date</th>
                 <th>Amount</th>
-                <th>Source</th>
+                <th>Paid To</th>
                 <th>Remark</th>
             </tr>
+            {% for expense in expense_list %}
             <tr>
-                <td>2024-dec-13</td>
-                <td>23300</td>
-                <td>Sale</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci beatae commodi cumque
-                    dolore eos in ipsam natus nisi sapiente? Aliquid magni non sint vero?
-                </td>
+                <td>{{ expense.entry_date }}</td>
+                <td>{{ expense.paid_date }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.paid_to }}</td>
+                <td>{{ expense.remark }}</td>
             </tr>
-
-
-
-            <tr>
-                <td>2024-dec-13</td>
-                <td>23300</td>
-                <td>Sale</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci beatae commodi cumque
-                    dolore eos in ipsam natus nisi sapiente? Aliquid magni non sint vero?
-                </td>
-            </tr><tr>
-                <td>2024-dec-13</td>
-                <td>23300</td>
-                <td>Sale</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci beatae commodi cumque
-                    dolore eos in ipsam natus nisi sapiente? Aliquid magni non sint vero?
-                </td>
-            </tr><tr>
-                <td>2024-dec-13</td>
-                <td>23300</td>
-                <td>Sale</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci beatae commodi cumque
-                    dolore eos in ipsam natus nisi sapiente? Aliquid magni non sint vero?
-                </td>
-            </tr><tr>
-                <td>2024-dec-13</td>
-                <td>23300</td>
-                <td>Sale</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci beatae commodi cumque
-                    dolore eos in ipsam natus nisi sapiente? Aliquid magni non sint vero?
-                </td>
-            </tr>
+            {% endfor %}
         </table>
     </div>
 {% endblock content %}

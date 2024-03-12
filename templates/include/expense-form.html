@@ -5,21 +5,27 @@
             <i class="fa-thin fa-x close-sign"></i>
         </div>
 
-        <form action="">
+        <form action="{{ url_for('transaction') }}" method="post">
 
             <div class="form-row">
                 <div class="column">
-                    <input type="text" placeholder="Enter amount of expense">
+                    <input type="text" placeholder="Enter amount of expense" name="amount">
                 </div>
                 <div class="column">
-                    <input type="text" placeholder="Amount paid to ">
+                    <input type="text" placeholder="Amount paid to " name="paid_to">
                 </div>
             </div>
 
+            <div class="form-row">
+                <div class="column">
+                    <label for="">Amount paid date</label>
+                    <input type="date" name="paid_date">
+                </div>
+            </div>
 
             <div class="form-row">
                 <div class="column">
-                    <input type="text" placeholder="Remark" class="remark-field">
+                    <input type="text" placeholder="Remark" class="remark-field" name="remark">
                 </div>
             </div>
 

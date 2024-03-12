@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime, date
 
+from flask import Flask, render_template, request, redirect, url_for
 from config import DatabaseConfig, initialize_sql
 from expense_tracker.user.user_manager import UserManager
 from expense_tracker.user.exception import UserExists
+from expense_tracker.transcation.income import add_income, get_income_by_user_id, get_total_incomes
+from expense_tracker.transcation.expense import add_expense, get_all_expenses,get_total_expense
 from flask import flash
 from flask_login import LoginManager, logout_user, current_user
 from expense_tracker.user.user_manager import User
@@ -32,14 +35,39 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/income')
+@app.route('/income', methods=['GET', 'POST'])
 def income():
-    return render_template('income.html')
+    user_id = current_user.get_id()
+    income_list = get_income_by_user_id(user_id, mysql)
+    total_income = get_total_incomes(user_id, mysql)
+    if request.method == "POST":
+        data = request.form
+        is_added = add_income(user_id, amount=int(data.get('amount')), source=data.get('source'),
+                              remark=data.get('remark'),
+                              receive_date=datetime.strptime(data.get('receive_date'), "%Y-%m-%d"),
+                              mysql=mysql)
+        if is_added:
+            flash("Income Added", 'success')
+            return redirect(url_for('income'))
+    return render_template('income.html', income_list=income_list, total_income=total_income)
 
 
-@app.route('/transaction')
+@app.route('/transaction', methods=['GET', 'POST'])
 def transaction():
-    return render_template("transaction.html")
+    user_id = current_user.get_id()
+    expense_list = get_all_expenses(user_id, mysql)
+    total_expense = get_total_expense(user_id, mysql)
+    print(expense_list)
+    if request.method == 'POST':
+        data = request.form
+        print(data.to_dict())
+        is_added = add_expense(user_id, amount=int(data.get('amount')),
+                               paid_date=datetime.strptime(data.get('paid_date'), "%Y-%m-%d"),
+                               paid_to=data.get('paid_to'), remark=data.get('remark'), mysql=mysql)
+        if is_added:
+            flash('Expense added', 'success')
+            return redirect(url_for('transaction'))
+    return render_template("transaction.html", expense_list=expense_list, total_expense=total_expense)
 
 
 @app.route('/edit-profile', methods=['GET', 'POST'])
