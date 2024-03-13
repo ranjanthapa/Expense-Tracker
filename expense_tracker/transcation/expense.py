@@ -50,4 +50,7 @@ def get_total_expense(user_id: int, mysql: MySQL) -> str:
         total_expense_query = 'SELECT sum(amount) FROM expense WHERE userID=%s'
         cursor.execute(total_expense_query, (user_id,))
         result = cursor.fetchone()
-        return format(result[0], ',')
+        if result[0] is not None and result:
+            return format(result[0], ',')
+        else:
+            return '0'

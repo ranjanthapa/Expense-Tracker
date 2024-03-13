@@ -9,14 +9,17 @@
     {% endwith %}
 
 
+
+    {% include 'include/message.html' %}
+
     <div class="sht-transaction-details">
 
         <div class=" transaction-detail">
             <i class="fa-solid fa-wallet sign" style="color: #22ae0f;"></i>
 
             <div>
-                <span style="font-weight: bold">Balance</span>
-                <p class="amount">Rs 35000</p>
+                <span style="font-weight: bold">Income</span>
+                <p class="amount">Rs {{ context_data['total_income'] }}</p>
             </div>
         </div>
 
@@ -50,7 +53,7 @@
 
             <div>
                 <span style="font-weight: bold">Expenses</span>
-                <p class="amount">Rs 35000</p>
+                <p class="amount">Rs {{ context_data['total_expense'] }}</p>
             </div>
         </div>
 

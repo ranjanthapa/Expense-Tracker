@@ -52,4 +52,8 @@ def get_total_incomes(user_id: int, mysql: MySQL) -> str:
         total_income_query = 'SELECT sum(amount) FROM income WHERE userID=%s'
         cursor.execute(total_income_query, (user_id,))
         result = cursor.fetchone()
-        return format(result[0], ',')
+        if result[0] is not None and result:
+            return format(result[0], ',')
+
+        else:
+            return '0'

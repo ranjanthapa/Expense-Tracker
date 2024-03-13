@@ -7,7 +7,7 @@ from expense_tracker.user.exception import UserExists
 from expense_tracker.transcation.income import add_income, get_income_by_user_id, get_total_incomes
 from expense_tracker.transcation.expense import add_expense, get_all_expenses, get_total_expense
 from flask import flash
-from flask_login import LoginManager, logout_user, current_user
+from flask_login import LoginManager, logout_user, current_user, login_required
 from expense_tracker.user.user_manager import User
 
 import pprint
@@ -46,41 +46,54 @@ def home():
         expense['transaction_type'] = 'expense'
         recent_transactions.append(expense)
 
+    total_income = get_total_incomes(user, mysql).replace(',', '')
+    total_expense = get_total_expense(user, mysql).replace(',', '')
+    context_data = {
+        "total_income": format((int(total_income) - int(total_expense)), ','),
+        "total_expense": format(int(total_expense), ','),
+    }
     pprint.pprint(recent_transactions)
-    return render_template('home.html', recent_transactions=recent_transactions)
+    return render_template('home.html', recent_transactions=recent_transactions, context_data=context_data)
 
 
 @app.route('/income', methods=['GET', 'POST'])
 def income():
-    user_id = current_user.get_id()
-    income_list = get_income_by_user_id(user_id, mysql)
+    user = current_user.get_id()
+    income_list = get_income_by_user_id(user, mysql)
     # pprint.pprint(income_list)
-    total_income = get_total_incomes(user_id, mysql)
+    total_income = get_total_incomes(user, mysql)
     if request.method == "POST":
-        data = request.form
-        is_added = add_income(user_id, amount=int(data.get('amount')), source=data.get('source'),
-                              remark=data.get('remark'),
-                              receive_date=datetime.strptime(data.get('receive_date'), "%Y-%m-%d"),
-                              mysql=mysql)
-        if is_added:
+        if current_user.is_authenticated:
+            data = request.form
+            is_added = add_income(user, amount=int(data.get('amount')), source=data.get('source'),
+                                  remark=data.get('remark'),
+                                  receive_date=datetime.strptime(data.get('receive_date'), "%Y-%m-%d"),
+                                  mysql=mysql)
+            if is_added:
+                return redirect(url_for('income'))
+        else:
+            flash("Login required to add income", 'error')
             return redirect(url_for('income'))
     return render_template('income.html', income_list=income_list, total_income=total_income)
 
 
 @app.route('/transaction', methods=['GET', 'POST'])
 def transaction():
-    user_id = current_user.get_id()
-    expense_list = get_all_expenses(user_id, mysql)
-    total_expense = get_total_expense(user_id, mysql)
-    print(expense_list)
+    user = current_user.get_id()
+    expense_list = get_all_expenses(user, mysql)
+    total_expense = get_total_expense(user, mysql)
     if request.method == 'POST':
-        data = request.form
-        print(data.to_dict())
-        is_added = add_expense(user_id, amount=int(data.get('amount')),
-                               paid_date=datetime.strptime(data.get('paid_date'), "%Y-%m-%d"),
-                               paid_to=data.get('paid_to'), remark=data.get('remark'), mysql=mysql)
-        if is_added:
-            flash('Expense added', 'success')
+        if current_user.is_authenticated:
+            data = request.form
+            print(data.to_dict())
+            is_added = add_expense(user, amount=int(data.get('amount')),
+                                   paid_date=datetime.strptime(data.get('paid_date'), "%Y-%m-%d"),
+                                   paid_to=data.get('paid_to'), remark=data.get('remark'), mysql=mysql)
+            if is_added:
+                flash('Expense added', 'success')
+                return redirect(url_for('transaction'))
+        else:
+            flash("Login to add the transaction", "error")
             return redirect(url_for('transaction'))
     return render_template("transaction.html", expense_list=expense_list, total_expense=total_expense)
 
@@ -88,13 +101,19 @@ def transaction():
 @app.route('/edit-profile', methods=['GET', 'POST'])
 def edit_profile():
     if request.method == "POST":
-        user_manager = UserManager(mysql)
-        data = request.form.to_dict()
+        if current_user.is_authenticated:
 
-        user_id = current_user.get_id()
-        is_profile_update = user_manager.update_profile(user_id, data)
-        if is_profile_update:
-            flash("Profile Updated successfully", "success")
+            user_manager = UserManager(mysql)
+            data = request.form.to_dict()
+
+            user_id = current_user.get_id()
+            is_profile_update = user_manager.update_profile(user_id, data)
+            if is_profile_update:
+                flash("Profile Updated successfully", "success")
+                return redirect(url_for('edit_profile'))
+
+        else:
+            flash("Login to edit profile", 'error')
             return redirect(url_for('edit_profile'))
     return render_template("edit_profile.html")
 
@@ -112,7 +131,6 @@ def register():
 
         if password == confirm_password:
             user_manager = UserManager(mysql)
-            print(user_manager.get_user_info(email))
             try:
                 user_manager.register_user(email, password, phone_number, full_name)
                 flash('User created successfully', 'success')
@@ -140,6 +158,7 @@ def login():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect('/')
