@@ -26,7 +26,7 @@ def delete_expense(userID: int, expenseID: int, mysql: MySQL) -> None:
 def get_all_expenses(user_id: int, mysql: MySQL) -> list[dict]:
     """returns the list of expenses related to the user id"""
     with MySQLCursorContextManager(mysql) as cursor:
-        get_all_query = "SELECT * FROM expense where userID=%s"
+        get_all_query = "SELECT * FROM expense where userID=%s ORDER BY expenseID desc"
         cursor.execute(get_all_query, (user_id,))
         results = cursor.fetchall()
         data: list[dict] = []

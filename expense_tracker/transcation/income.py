@@ -28,7 +28,7 @@ def get_total_income(user_id: int, mysql: MySQL) -> tuple:
 def get_income_by_user_id(user_id: int, mysql: MySQL) -> list[dict]:
     """ returns the list of income related to the user id """
     with MySQLCursorContextManager(mysql) as cursor:
-        get_income_query = "SELECT * FROM income WHERE userID=%s"
+        get_income_query = "SELECT * FROM income WHERE userID=%s ORDER BY incomeID desc  "
         cursor.execute(get_income_query, (user_id,))
         results = cursor.fetchall()
         data: list[dict] = []

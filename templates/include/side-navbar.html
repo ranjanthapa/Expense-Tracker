@@ -3,9 +3,7 @@
     <div class="sidebar">
         <h2>Expense Tracker</h2>
         <div class="user-info">
-            {#            <img src=""#}
-            {#                 alt="" class="user-profile">#}
-
+                        <img src="" alt="" class="user-profile">
             {% if current_user.is_authenticated %}
                 <p class="user-name">{{ current_user.user_data.full_name }}</p>
             {% else %}

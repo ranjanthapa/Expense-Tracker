@@ -5,10 +5,12 @@ from config import DatabaseConfig, initialize_sql
 from expense_tracker.user.user_manager import UserManager
 from expense_tracker.user.exception import UserExists
 from expense_tracker.transcation.income import add_income, get_income_by_user_id, get_total_incomes
-from expense_tracker.transcation.expense import add_expense, get_all_expenses,get_total_expense
+from expense_tracker.transcation.expense import add_expense, get_all_expenses, get_total_expense
 from flask import flash
 from flask_login import LoginManager, logout_user, current_user
 from expense_tracker.user.user_manager import User
+
+import pprint
 
 app = Flask(__name__)
 app.config.from_object(DatabaseConfig)
@@ -22,7 +24,7 @@ mysql = initialize_sql(app)
 def load_user(user_id: int):
     print(type(user_id))
     user_manager = UserManager(mysql)
-    user_data = user_manager.get_user_by_id(user_id)
+    user_data = user_manager.get_user_info(user_id)
     if user_data:
         user = User(user_data)
         return user
@@ -32,13 +34,27 @@ def load_user(user_id: int):
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    user = current_user.get_id()
+    recent_transactions: list = []
+    income_list = get_income_by_user_id(user, mysql)
+    for income in income_list[:7]:
+        income['transaction_type'] = 'income'
+        recent_transactions.append(income)
+
+    expense_list = get_all_expenses(user, mysql)
+    for expense in expense_list[:7]:
+        expense['transaction_type'] = 'expense'
+        recent_transactions.append(expense)
+
+    pprint.pprint(recent_transactions)
+    return render_template('home.html', recent_transactions=recent_transactions)
 
 
 @app.route('/income', methods=['GET', 'POST'])
 def income():
     user_id = current_user.get_id()
     income_list = get_income_by_user_id(user_id, mysql)
+    # pprint.pprint(income_list)
     total_income = get_total_incomes(user_id, mysql)
     if request.method == "POST":
         data = request.form
@@ -47,7 +63,6 @@ def income():
                               receive_date=datetime.strptime(data.get('receive_date'), "%Y-%m-%d"),
                               mysql=mysql)
         if is_added:
-            flash("Income Added", 'success')
             return redirect(url_for('income'))
     return render_template('income.html', income_list=income_list, total_income=total_income)
 
@@ -97,7 +112,7 @@ def register():
 
         if password == confirm_password:
             user_manager = UserManager(mysql)
-            print(user_manager.get_user_by_id(email))
+            print(user_manager.get_user_info(email))
             try:
                 user_manager.register_user(email, password, phone_number, full_name)
                 flash('User created successfully', 'success')

@@ -56,4 +56,51 @@
 
     </div>
 
+
+
+    <div class="transaction-info">
+        <h5>Recent Transactions</h5>
+    </div>
+    <div class="transaction-table">
+        <table>
+            <tr>
+                <th>Entry Date</th>
+                <th>Transaction Date</th>
+                <th>Transaction Type</th>
+                <th>Amount</th>
+                <th>Source</th>
+                <th>Paid To</th>
+                <th>Remark</th>
+            </tr>
+            {% for transaction in recent_transactions %}
+                <tr>
+                    <td>{{ transaction.entry_date }}</td>
+                    <td>
+                        {% if transaction.receive_date %}
+                            {{ transaction.receive_date }}
+                        {% elif transaction.paid_date %}
+                            {{ transaction.paid_date }}
+                        {% endif %}
+                    </td>
+                    <td>{{ transaction.transaction_type }}</td>
+                    <td>{{ transaction.amount }}</td>
+
+                    {% if not transaction.source %}
+                        <td>--</td>
+                    {% else %}
+                        <td>{{ transaction.source }}</td>
+                    {% endif %}
+
+                    {% if not transaction.paid_to %}
+                        <td>--</td>
+                    {% else %}
+                        <td>{{ transaction.paid_to }}</td>
+                    {% endif %}
+
+                    <td>{{ transaction.remark }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
 {% endblock content %}

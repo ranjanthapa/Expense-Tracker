@@ -75,7 +75,7 @@ class UserManager:
             image_save_path = None
         return image_save_path
 
-    def get_user_by_id(self, user_id: int) -> dict:
+    def get_user_info(self, user_id: int) -> dict:
         with MySQLCursorContextManager(self.mysql) as cursor:
             get_user_query = "SELECT * FROM users WHERE userID=%s"
             cursor.execute(get_user_query, (user_id,))
@@ -86,7 +86,7 @@ class UserManager:
                     "email": result[1],
                     "phone_number": result[3],
                     "full_name": result[4],
-                    "profile_pic": result[5]
+                    "profile_pic": result[5].replace('\\', '/')
                 }
                 return data
 

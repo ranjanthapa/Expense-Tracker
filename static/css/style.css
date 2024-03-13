@@ -58,6 +58,7 @@ body {
     display: flex;
     justify-content: space-evenly;
     padding: 10px;
+    margin-bottom: 50px;
 }
 
 .transaction-detail {
@@ -132,38 +133,38 @@ body {
     font-size: 20px;
 }
 
-.income-table {
+.transaction-table  {
 
     margin-top: 20px;
     background-color: white;
     opacity: 0.8;
 }
 
-.income-table table {
+.transaction-table  table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.income-table th,
-.income-table td {
+.transaction-table  th,
+.transaction-table  td {
     border-top: 1px solid #ddd;
     padding: 18px;
     text-align: left;
 }
 
-.income-table th {
+.transaction-table th {
     background-color: #f2f2f2;
 }
 
-.income-table tr:nth-child(even) {
+.transaction-table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.income-table tr:hover {
+.transaction-table tr:hover {
     background-color: #ddd;
 }
 
-.income-info {
+.transaction-info {
     padding-left: 50px;
 }
 
