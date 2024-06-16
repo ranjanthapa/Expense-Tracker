@@ -1,13 +1,31 @@
 from flask_mysqldb import MySQL
 from expense_tracker.mysql_context import MySQLCursorContextManager
 from datetime import date
+from expense_tracker.utils import table_exists
 
+
+def create_income_table(mysql: MySQL):
+    query = (
+        "CREATE TABLE income ("
+        "incomeID int PRIMARY KEY AUTO_INCREMENT, "
+        "userID int, "
+        "FOREIGN KEY (userID) REFERENCES users(userID), "
+        "amount int, "
+        "remark varchar(100), "
+        "entry_date date, "
+        "source varchar(150), "
+        "receive_date date)"
+    )
+    with MySQLCursorContextManager(mysql) as cursor:
+        cursor.execute(query)
 
 def add_income(user_id: int, amount: int, source: str, remark: str, mysql: MySQL,
                receive_date: date) -> bool:
     """insert the income"""
     entry_date = date.today()
     with MySQLCursorContextManager(mysql) as cursor:
+        if not table_exists(mysql, "income"):
+            create_income_table(mysql)
         insert_income: str = "INSERT INTO income (userID, amount, source, remark, entry_date, receive_date) VALUES (%s, %s, %s, %s, %s, %s)"
         cursor.execute(insert_income, (user_id, amount, source, remark, entry_date, receive_date))
         if cursor.rowcount > 0:

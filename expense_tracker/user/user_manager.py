@@ -6,8 +6,8 @@ from expense_tracker.utils import is_allowed_file, get_media_folder_path, get_ha
 from .exception import UserExists
 from werkzeug.utils import secure_filename
 import os
+from expense_tracker.utils   import table_exists
 from flask_login import UserMixin, login_user
-
 
 class User(UserMixin):
     def __init__(self, user_data: dict):
@@ -30,6 +30,29 @@ class UserManager:
     def __init__(self, mysql: MySQL):
         self.mysql = mysql
 
+    def create_user_table(self):
+        query = (
+            "CREATE TABLE users ("
+            "userID int primary key auto_increment, "
+            "email varchar(150) unique, "
+            "password varchar(150), "
+            "phone_number char(50), "
+            "full_name char(50), "
+            "profile_picture varchar(150))"
+        )
+        with MySQLCursorContextManager(self.mysql) as cursor:
+            query = (
+            "CREATE TABLE users ("
+            "userID int primary key auto_increment, "
+            "email varchar(150) unique, "
+            "password varchar(150), "
+            "phone_number char(50), "
+            "full_name char(50), "
+            "profile_picture varchar(150))"
+        )
+            cursor.execute(query)
+
+
     def login(self, email: str, password: str) -> bool:
         hash_password = get_hash_password(password)
         with MySQLCursorContextManager(self.mysql) as cursor:
@@ -51,6 +74,8 @@ class UserManager:
         image_save_path = self.handle_upload_file(image_file)
         hash_password = get_hash_password(password)
         with MySQLCursorContextManager(self.mysql) as cursor:
+            if not table_exists(self.mysql, "users"):
+                self.create_user_table()
             register_user_query = "INSERT INTO users (email, password, phone_number, full_name, profile_picture) VALUES (%s, %s, %s, %s, %s)"
             try:
                 cursor.execute(register_user_query, (email, hash_password, phone_number, full_name, image_save_path))
@@ -116,3 +141,5 @@ class UserManager:
                 return True
             else:
                 return False
+
+

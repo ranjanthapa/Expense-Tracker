@@ -1,13 +1,15 @@
 from flask_mysqldb import MySQL
 from expense_tracker.mysql_context import MySQLCursorContextManager
 from datetime import date, datetime
-
+from expense_tracker.utils   import table_exists
 
 def add_expense(user_id: int, amount: int, paid_date: date, paid_to: str, remark: str,
                 mysql: MySQL) -> bool:
     """insert the expense data """
     entry_date = date.today()
     with MySQLCursorContextManager(mysql) as cursor:
+        if not table_exists(mysql, "expense"):
+            create_expense_table()
         insert_expense_query = "INSERT INTO expense (entry_date, paid_date, amount, userID, remark, paid_to) values(%s, %s, %s, %s, %s, %s)"
         cursor.execute(insert_expense_query, (entry_date, paid_date, amount, user_id, remark, paid_to))
         if cursor.rowcount > 0:
@@ -54,3 +56,19 @@ def get_total_expense(user_id: int, mysql: MySQL) -> str:
             return format(result[0], ',')
         else:
             return '0'
+
+
+def create_expense_table(mysql: MySQL):
+    with MySQLCursorContextManager(mysql) as cursor:
+        query = (
+            "CREATE TABLE expense ("
+            "expenseID int PRIMARY KEY AUTO_INCREMENT, "
+            "entry_date DATE, "
+            "paid_date DATE, "
+            "amount INT, "
+            "userID INT, "
+            "FOREIGN KEY(userID) REFERENCES users(userID), "
+            "remark VARCHAR(200), "
+            "paid_to VARCHAR(100))"
+        )
+        cursor.execute(query)
