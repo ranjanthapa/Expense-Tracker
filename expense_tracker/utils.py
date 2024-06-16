@@ -42,3 +42,4 @@ def table_exists(mysql: MySQL, table_name) -> bool:
             return False
 
 
+
